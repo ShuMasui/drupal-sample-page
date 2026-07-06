@@ -3,8 +3,8 @@ services:
     image: drupal:11-apache
     container_name: workspace-drupal-1
     restart: always
-    ports:
-      - "54321:80"
+    expose:
+      - "80"
     volumes:
       - ./web/themes:/var/www/html/themes
       - ./web/modules:/var/www/html/modules
