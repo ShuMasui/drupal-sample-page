@@ -3,8 +3,6 @@ services:
     image: drupal:11-apache
     container_name: workspace-drupal-1
     restart: always
-    expose:
-      - "80"
     volumes:
       - ./web/themes:/var/www/html/themes
       - ./web/modules:/var/www/html/modules
@@ -23,10 +21,10 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: drupal
     volumes:
-      - db-store:/var/lib/mysql
+      - ./mysql:/var/lib/mysql
       - ./mysql/dump:/docker-entrypoint-initdb.d
 
-  
+
   nginx:
     image: nginx:alpine
     container_name: workspace-nginx-1
@@ -48,6 +46,3 @@ services:
       - ./certbot/www:/var/www/certbot
       - ./certbot/conf:/etc/letsencrypt
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'" 
-
-volumes:
-  db-store:
