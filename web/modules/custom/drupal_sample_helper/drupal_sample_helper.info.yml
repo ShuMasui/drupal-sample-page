@@ -1,0 +1,8 @@
+name: 'Drupal Sample Helper'
+type: module
+description: 'Drupalの強みを示すカスタムサンプルモジュール。'
+package: Custom
+core_version_requirement: ^11
+dependencies:
+  - drupal:block
+  - drupal:node

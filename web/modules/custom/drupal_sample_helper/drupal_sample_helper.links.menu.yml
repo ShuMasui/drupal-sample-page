@@ -1,0 +1,5 @@
+drupal_sample_helper.settings:
+  title: 'Drupal Sample Helper 設定'
+  description: 'サンプルモジュールのウェルカムメッセージなどを設定します。'
+  parent: system.admin_config_services
+  route_name: drupal_sample_helper.settings

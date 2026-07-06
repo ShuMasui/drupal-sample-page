@@ -1,0 +1,45 @@
+services:
+  drupal:
+    image: drupal:11-apache
+    container_name: workspace-drupal-1
+    volumes:
+      - ./web/themes:/var/www/html/themes
+      - ./web/modules:/var/www/html/modules
+      - ./web/sites:/var/www/html/sites
+      - ./config:/opt/drupal/config
+      - ./composer.json:/opt/drupal/composer.json
+      - ./composer.lock:/opt/drupal/composer.lock
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mariadb:10.11
+    container_name: workspace-mysql-1
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: drupal
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/dump:/docker-entrypoint-initdb.d
+
+  
+  nginx:
+    image: nginx:alpine
+    container_name: workspace-nginx-1
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+    depends_on:
+      - drupal
+    
+  certbot:
+    image: certbot/certbot:latest
+    container_name: workspace-certbot-1
+    volumes:
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'" 

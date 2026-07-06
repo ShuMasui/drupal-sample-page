@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Drupal Sample Helper module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_entity_insert().
+ *
+ * コンテンツ（Nodeなど）が新しく作成されたときに、システムメッセージを表示します。
+ * Drupalのイベント/フックの強力さを示す例です。
+ */
+function drupal_sample_helper_entity_insert(EntityInterface $entity): void {
+  // nodeエンティティが作成された場合のみ処理
+  if ($entity->getEntityTypeId() === 'node') {
+    // ユーザーにメッセージを表示する
+    \Drupal::messenger()->addStatus(t('フック発火: 新しいコンテンツ「@title」（タイプ: @type）が作成されました！', [
+      '@title' => $entity->label(),
+      '@type' => $entity->bundle(),
+    ]));
+  }
+}

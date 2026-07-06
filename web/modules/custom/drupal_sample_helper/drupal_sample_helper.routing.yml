@@ -1,0 +1,15 @@
+drupal_sample_helper.settings:
+  path: '/admin/config/services/drupal-sample-helper'
+  defaults:
+    _form: '\Drupal\drupal_sample_helper\Form\SampleSettingsForm'
+    _title: 'Drupal Sample Helper 設定'
+  requirements:
+    _permission: 'administer site configuration'
+
+drupal_sample_helper.welcome:
+  path: '/welcome-sample'
+  defaults:
+    _controller: '\Drupal\drupal_sample_helper\Controller\SamplePageController::content'
+    _title: 'ようこそ Drupal の世界へ'
+  requirements:
+    _permission: 'access content'

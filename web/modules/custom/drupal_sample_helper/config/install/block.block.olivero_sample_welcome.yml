@@ -1,0 +1,19 @@
+langcode: ja
+status: true
+dependencies:
+  module:
+    - drupal_sample_helper
+  theme:
+    - olivero
+id: olivero_sample_welcome
+theme: olivero
+region: content
+weight: -10
+provider: null
+plugin: drupal_sample_welcome_block
+settings:
+  id: drupal_sample_welcome_block
+  label: 'ようこそブロック (Custom)'
+  label_display: visible
+  provider: drupal_sample_helper
+visibility: {}
